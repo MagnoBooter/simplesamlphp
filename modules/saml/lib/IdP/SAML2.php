@@ -775,7 +775,7 @@ class SAML2
             'entityid' => $entityid,
             'SingleSignOnService' => $sso,
             'SingleLogoutService' => $slo,
-            'NameIDFormat' => $config->getArrayizeString('NameIDFormat', Constants::NAMEID_TRANSIENT),
+            'NameIDFormat' => $config->getArrayizeString('NameIDFormat', [Constants::NAMEID_TRANSIENT]),
         ];
 
         $cryptoUtils = new Utils\Crypto();
@@ -877,6 +877,11 @@ class SAML2
                 $metadata['hide.from.discovery'] = true;
             }
         }
+
+        if ($config->hasValue('saml:Extensions')) {
+            $metadata['saml:Extensions'] = $config->getArray('saml:Extensions');
+        }
+
 
         if ($config->hasValue('UIInfo')) {
             $metadata['UIInfo'] = $config->getArray('UIInfo');
